@@ -18,10 +18,9 @@ def get_score(review):
     :param review: All text associated with the review.
     :return: int: score --- the score of the review
     """
-    ###     YOUR CODE GOES HERE
-    raise NotImplemented
+    # YOUR CODE GOES HERE
+    return int(re.search(r'Overall = ([0-9])', review).group(1))
 
-    return score
 
 def get_text(review):
     """
@@ -35,10 +34,8 @@ def get_text(review):
     :return: str: text -- the textual description part of the imdb review.
     """
 
-    ###     YOUR CODE GOES HERE
-    raise NotImplemented
-
-    return text
+    # YOUR CODE GOES HERE
+    return re.search(r'Text = "(.*)"', review).group(1)
 
 
 def get_reviews(raw_data):
@@ -54,15 +51,23 @@ def get_reviews(raw_data):
     :param raw_data:
     :return:
     """
+    # print(raw_data)
     positive_texts = []
     negative_texts = []
 
     for review in re.split(r'\.\n', raw_data):
-        overall_score = get_score(review)
-        review_text = get_text(review)
+        if review:
+            overall_score = get_score(review)
+            print(overall_score)
+            review_text = get_text(review)
+            print(review)
 
-        ###     YOUR CODE GOES HERE
-        raise NotImplemented
+            # YOUR CODE GOES HERE
+            if overall_score > 5:
+                positive_texts.append(review_text)
+            elif overall_score < 5:
+                negative_texts.append(review_text)
+            
 
 
     return positive_texts, negative_texts
