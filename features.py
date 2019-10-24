@@ -3,8 +3,12 @@ import nltk
 import re
 import word_category_counter
 import data_helper
-import os, sys
+import os
+import sys
 from nltk.corpus import opinion_lexicon
+from nltk.corpus import stopwords
+from nltk.probability import ConditionalFreqDist, FreqDist
+from nltk.util import bigrams, ngrams
 
 
 DATA_DIR = "data"
@@ -32,11 +36,18 @@ def normalize(token, should_normalize=True):
 
     else:
 
-        ###     YOUR CODE GOES HERE
-        raise NotImplemented
+        # YOUR CODE GOES HERE
+        normalized_token = []
+        word = token.lower()
+        stop = stopwords.words('english')
+        if word not in stop:
+            normalized_token = re.findall('\w+', word)
+        else:
+            normalized_token = None
+
+
 
     return normalized_token
-
 
 
 def get_words_tags(text, should_normalize=True):
@@ -56,13 +67,38 @@ def get_words_tags(text, should_normalize=True):
     :param should_normalize:
     :return:
     """
+
     words = []
     tags = []
 
     # tokenization for each sentence
 
-    ###     YOUR CODE GOES HERE
-    raise NotImplemented
+    # YOUR CODE GOES HERE
+
+    if should_normalize:
+        sent = nltk.sent_tokenize(text)
+        for sentence in sent:
+            leTags = nltk.pos_tag(nltk.word_tokenize(sentence))
+            for word in leTags:
+                # print(word)
+                norm = normalize(word[0])
+                # print(norm)
+                if norm:
+                    text = ''
+                    for wrd in norm:
+                        text = text + wrd
+                    words.append(text)
+                    tags.append(word[1])
+            
+    else:
+        sent = nltk.sent_tokenize(text)
+        for sentence in sent:
+            leTags = nltk.pos_tag(nltk.word_tokenize(sentence))
+            for word in leTags:
+                words.append(word[0])
+                tags.append(word[1])
+
+
 
     return words, tags
 
@@ -75,11 +111,39 @@ def get_ngram_features(tokens):
     :param tokens:
     :return: feature_vectors: a dictionary values for each ngram feature
     """
+
+
+
     feature_vectors = {}
 
+    
 
-    ###     YOUR CODE GOES HERE
-    raise NotImplemented
+    # YOUR CODE GOES HERE
+    # print('bruh')
+    unigrams = tokens
+    print(unigrams)
+    bigG = list(bigrams(tokens))
+    trigrams = list(ngrams(tokens, 3))
+    # print('bruh0')
+    fDistUni = FreqDist(unigrams)
+    fDistBi = FreqDist(bigG)
+    fDistTri = FreqDist(trigrams)
+    # print('bruh1')
+
+    for pair in fDistUni:
+        # print('here')
+        # print(pair)
+        feature_vectors.update({('UNI_'+pair) : fDistUni.freq(pair)})
+        # print('there')
+    
+    for pair in fDistBi:
+        # print(pair)
+        feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi.freq(pair)})
+    
+    for pair in fDistTri:
+        feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri.freq(pair)})
+
+    print(feature_vectors)
 
     return feature_vectors
 
@@ -94,8 +158,31 @@ def get_pos_features(tags):
     """
     feature_vectors = {}
 
-    ###     YOUR CODE GOES HERE
-    raise NotImplemented
+    # YOUR CODE GOES HERE
+    unigrams = tags
+    bigG = list(bigrams(tags))
+    trigram = list(ngrams(tags, 3))
+
+    fDistUni = FreqDist(unigrams)
+    fDistBi = FreqDist(bigG)
+    fDistTri = FreqDist(trigram)
+    # print('bruh1')
+
+    for pair in fDistUni:
+        # print('here')
+        # print(pair)
+        feature_vectors.update({('UNI_'+pair) : fDistUni.freq(pair)})
+        # print('there')
+    
+    for pair in fDistBi:
+        # print(pair)
+        feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi.freq(pair)})
+    
+    for pair in fDistTri:
+        feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri.freq(pair)})
+
+    print(feature_vectors)
+
 
     return feature_vectors
 
@@ -130,7 +217,7 @@ def get_liwc_features(words):
     return feature_vectors
 
 
-FEATURE_SETS = {"word_pos_features", "word_features", "word_pos_liwc_features"}
+FEATURE_SETS = {"word_pos_features", "word_features", "word_pos_liwc_features", "word_pos_opinion_features"}
 
 
 def get_opinion_features(tags):
@@ -153,8 +240,8 @@ def get_opinion_features(tags):
     pos_opinion = opinion_lexicon.positive()
     feature_vectors = {}
 
-    ###     YOUR CODE GOES HERE
-    raise NotImplemented
+    # YOUR CODE GOES HERE
+    
 
     return feature_vectors
 
@@ -172,15 +259,39 @@ def get_features_category_tuples(category_text_dict, feature_set):
     all_texts = []
 
     assert feature_set in FEATURE_SETS, "unrecognized feature set:{}, Accepted values:{}".format(feature_set, FEATURE_SETS)
-
+    print(feature_set)
+    print(FEATURE_SETS)
     for category in category_text_dict:
+  
         for text in category_text_dict[category]:
+         
 
             words, tags = get_words_tags(text)
             feature_vectors = {}
 
-            ###     YOUR CODE GOES HERE
-            raise NotImplemented
+            # YOUR CODE GOES HERE
+            if feature_set == "word_features":
+                feature_vectors.update(get_ngram_features(words))
+                # do this
+            elif feature_set == "word_pos_features":
+                feature_vectors.update(get_ngram_features(words))
+                feature_vectors.update(get_pos_features(tags))
+
+                print('wip')
+                # do this
+            elif feature_set == "word_pos_liwc_features":
+                feature_vectors.update(get_ngram_features(words))
+                feature_vectors.update(get_pos_features(tags))
+                feature_vectors.update(get_liwc_features(words))
+                print('wip')
+                # do this
+            elif feature_set == "word_pos_opinion_features":
+                feature_vectors.update(get_ngram_features(words))
+                feature_vectors.update(get_pos_features(tags))
+                feature_vectors.update(get_opinion_features(tags))
+                print('wip')
+                # do this
+            
 
             features_category_tuples.append((feature_vectors, category))
             all_texts.append(text)
@@ -211,7 +322,7 @@ def features_stub():
     positive_texts, negative_texts = data_helper.get_reviews(raw_data)
 
     category_texts = {"positive": positive_texts, "negative": negative_texts}
-    feature_set = "word_features"
+    feature_set = "word_pos_features"
 
     features_category_tuples, texts = get_features_category_tuples(category_texts, feature_set)
 
