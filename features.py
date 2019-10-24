@@ -241,7 +241,19 @@ def get_opinion_features(tags):
     feature_vectors = {}
 
     # YOUR CODE GOES HERE
-    
+    words = tags
+    wordF = FreqDist(words)
+    for word in neg_opinion:
+        if wordF.freq(word) > 0.0:
+            feature_vectors.update({'UNI_NEG_' + word : wordF.freq(word)})
+
+    for word in pos_opinion:
+        if wordF.freq(word) > 0.0:
+            feature_vectors.update({'UNI_POS_' + word : wordF.freq(word)})
+
+
+
+
 
     return feature_vectors
 
@@ -277,19 +289,19 @@ def get_features_category_tuples(category_text_dict, feature_set):
                 feature_vectors.update(get_ngram_features(words))
                 feature_vectors.update(get_pos_features(tags))
 
-                print('wip')
+                # print('wip')
                 # do this
             elif feature_set == "word_pos_liwc_features":
                 feature_vectors.update(get_ngram_features(words))
                 feature_vectors.update(get_pos_features(tags))
                 feature_vectors.update(get_liwc_features(words))
-                print('wip')
+                # print('wip')
                 # do this
             elif feature_set == "word_pos_opinion_features":
                 feature_vectors.update(get_ngram_features(words))
                 feature_vectors.update(get_pos_features(tags))
-                feature_vectors.update(get_opinion_features(tags))
-                print('wip')
+                feature_vectors.update(get_opinion_features(words))
+                # print('wip')
                 # do this
             
 
@@ -322,12 +334,12 @@ def features_stub():
     positive_texts, negative_texts = data_helper.get_reviews(raw_data)
 
     category_texts = {"positive": positive_texts, "negative": negative_texts}
-    feature_set = "word_pos_features"
+    feature_set = "word_pos_opinion_features"
 
     features_category_tuples, texts = get_features_category_tuples(category_texts, feature_set)
 
-    raise NotImplemented
-    filename = "???"
+    # raise NotImplemented
+    filename = "idk"
     write_features_category(features_category_tuples, filename)
 
 
