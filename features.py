@@ -121,7 +121,8 @@ def get_ngram_features(tokens):
     # YOUR CODE GOES HERE
     # print('bruh')
     unigrams = tokens
-    print(unigrams)
+    l = len(tokens)
+    # print(unigrams)
     bigG = list(bigrams(tokens))
     trigrams = list(ngrams(tokens, 3))
     # print('bruh0')
@@ -133,17 +134,17 @@ def get_ngram_features(tokens):
     for pair in fDistUni:
         # print('here')
         # print(pair)
-        feature_vectors.update({('UNI_'+pair) : fDistUni.freq(pair)})
+        feature_vectors.update({('UNI_'+pair) : fDistUni[pair]/l})
         # print('there')
     
     for pair in fDistBi:
         # print(pair)
-        feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi.freq(pair)})
+        feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi[pair]/l})
     
     for pair in fDistTri:
-        feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri.freq(pair)})
+        feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri[pair]/l})
 
-    print(feature_vectors)
+    # print(feature_vectors)
 
     return feature_vectors
 
@@ -181,7 +182,7 @@ def get_pos_features(tags):
     for pair in fDistTri:
         feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri.freq(pair)})
 
-    print(feature_vectors)
+    # print(feature_vectors)
 
 
     return feature_vectors
@@ -271,8 +272,8 @@ def get_features_category_tuples(category_text_dict, feature_set):
     all_texts = []
 
     assert feature_set in FEATURE_SETS, "unrecognized feature set:{}, Accepted values:{}".format(feature_set, FEATURE_SETS)
-    print(feature_set)
-    print(FEATURE_SETS)
+    # print(feature_set)
+    # print(FEATURE_SETS)
     for category in category_text_dict:
   
         for text in category_text_dict[category]:

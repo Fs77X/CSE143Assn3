@@ -58,9 +58,9 @@ def get_reviews(raw_data):
     for review in re.split(r'\.\n', raw_data):
         if review:
             overall_score = get_score(review)
-            # print(overall_score)
+            print(overall_score)
             review_text = get_text(review)
-            # print(review)
+            print(review)
 
             # YOUR CODE GOES HERE
             if overall_score > 5:

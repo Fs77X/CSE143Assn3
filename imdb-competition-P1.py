@@ -35,7 +35,26 @@ def evaluate(classifier, features_category_tuples, reference_text, data_set_name
 
     ###     YOUR CODE GOES HERE
     # TODO: evaluate your model
-    raise NotImplemented
+    acc = nltk.classify.accuracy(classifier, features_category_tuples)
+    classifier.show_most_informative_features()
+
+    d = [l for f,l in features_category_tuples]
+    t = [f for f, l in features_category_tuples]
+    # print(t)
+
+    f = classifier.classify_many(t)
+
+    cMatrix = nltk.ConfusionMatrix(d, f)
+    confusion_matrix = cMatrix
+    probability = classifier.prob_classify_many(t)
+    accuracy = acc
+
+
+
+
+
+
+    
 
 
     return accuracy, probability, confusion_matrix
@@ -43,7 +62,8 @@ def evaluate(classifier, features_category_tuples, reference_text, data_set_name
 
 def build_features(data_file, feat_name, save_feats=None, binning=False):
     # read text data
-    positive_texts, negative_texts = data_helper.get_reviews(os.path.join(DATA_DIR, data_file))
+    raw_data = data_helper.read_file(data_file)
+    positive_texts, negative_texts = data_helper.get_reviews(raw_data)
 
     category_texts = {"positive": positive_texts, "negative": negative_texts}
 
@@ -64,7 +84,9 @@ def train_model(datafile, feature_set, save_model=None):
 
     ###     YOUR CODE GOES HERE
     # TODO: train your model here
-    raise NotImplemented
+    # print(texts)
+    classifier = nltk.classify.NaiveBayesClassifier.train(features_data)
+    
 
 
     if save_model is not None:
@@ -76,7 +98,8 @@ def train_eval(train_file, feature_set, eval_file=None):
 
     # train the model
     split_name = "train"
-    model = train_model(train_file, feature_set,  binning=binning)
+    model = train_model(train_file, feature_set)
+    # model = train_model(train_file, feature_set,  binning=binning)
     #model.show_most_informative_features(20)
 
     # save the model
@@ -85,7 +108,8 @@ def train_eval(train_file, feature_set, eval_file=None):
 
     # evaluate the model
     if eval_file is not None:
-        features_data, texts = build_features(eval_file, feature_set, binning=binning)
+        # features_data, texts = build_features(eval_file, feature_set, binning=binning)
+        features_data, texts = build_features(eval_file, feature_set)
         accuracy, probability, cm = evaluate(model, features_data, texts, data_set_name=None)
         print("The accuracy of {} is: {}".format(eval_file, accuracy))
         print("Proabability per class:")
