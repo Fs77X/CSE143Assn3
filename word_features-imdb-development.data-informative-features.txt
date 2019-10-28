@@ -1,0 +1,11 @@
+Most Informative Features
+           UNI_character = 0.012987012987012988 positi : negati =      5.2 : 1.0
+                UNI_well = 0.009900990099009901 positi : negati =      5.0 : 1.0
+               UNI_movie = 0.030303030303030304 positi : negati =      4.3 : 1.0
+               UNI_sense = 0.015625       positi : negati =      3.9 : 1.0
+              UNI_series = 0.0136986301369863 positi : negati =      3.9 : 1.0
+          UNI_especially = 0.011235955056179775 positi : negati =      3.8 : 1.0
+              UNI_always = 0.012987012987012988 positi : negati =      3.8 : 1.0
+                   UNI_d = 0.009900990099009901 positi : negati =      3.8 : 1.0
+              UNI_things = 0.011235955056179775 positi : negati =      3.8 : 1.0
+                UNI_love = 0.020833333333333332 positi : negati =      3.7 : 1.0

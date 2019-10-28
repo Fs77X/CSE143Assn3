@@ -1,0 +1,11 @@
+Most Informative Features
+               BI_NN_VBP = 0.013157894736842105 positi : negati =      6.0 : 1.0
+                 UNI_VBP = 0.025974025974025976 positi : negati =      5.3 : 1.0
+           UNI_character = 0.012987012987012988 positi : negati =      5.2 : 1.0
+           TRI_VBD_JJ_NN = 0.013333333333333334 positi : negati =      5.0 : 1.0
+           TRI_NN_NN_VBP = 0.013333333333333334 positi : negati =      5.0 : 1.0
+                UNI_well = 0.009900990099009901 positi : negati =      5.0 : 1.0
+               BI_NNS_VB = 0.011904761904761904 positi : negati =      5.0 : 1.0
+           TRI_NNS_NN_NN = 0.013333333333333334 positi : negati =      4.9 : 1.0
+           TRI_JJ_NN_NNS = 0.012048192771084338 positi : negati =      4.9 : 1.0
+           TRI_NN_NN_VBZ = 0.010101010101010102 positi : negati =      4.8 : 1.0

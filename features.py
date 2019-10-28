@@ -121,30 +121,24 @@ def get_ngram_features(tokens):
     # YOUR CODE GOES HERE
     # print('bruh')
     unigrams = tokens
-    l = len(tokens)
-    # print(unigrams)
+    # l = len(tokens)
     bigG = list(bigrams(tokens))
     trigrams = list(ngrams(tokens, 3))
-    # print('bruh0')
     fDistUni = FreqDist(unigrams)
     fDistBi = FreqDist(bigG)
     fDistTri = FreqDist(trigrams)
-    # print('bruh1')
 
     for pair in fDistUni:
-        # print('here')
-        # print(pair)
-        feature_vectors.update({('UNI_'+pair) : fDistUni[pair]/l})
-        # print('there')
+        feature_vectors.update({('UNI_'+pair) : fDistUni[pair]/fDistUni.N()})
+   
     
     for pair in fDistBi:
         # print(pair)
-        feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi[pair]/l})
+        feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi[pair]/fDistBi.N()})
     
     for pair in fDistTri:
-        feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri[pair]/l})
+        feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri[pair]/fDistTri.N()})
 
-    # print(feature_vectors)
 
     return feature_vectors
 
@@ -167,22 +161,16 @@ def get_pos_features(tags):
     fDistUni = FreqDist(unigrams)
     fDistBi = FreqDist(bigG)
     fDistTri = FreqDist(trigram)
-    # print('bruh1')
 
     for pair in fDistUni:
-        # print('here')
-        # print(pair)
         feature_vectors.update({('UNI_'+pair) : fDistUni.freq(pair)})
-        # print('there')
     
     for pair in fDistBi:
-        # print(pair)
         feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi.freq(pair)})
     
     for pair in fDistTri:
         feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri.freq(pair)})
 
-    # print(feature_vectors)
 
 
     return feature_vectors
@@ -302,7 +290,6 @@ def get_features_category_tuples(category_text_dict, feature_set):
                 feature_vectors.update(get_ngram_features(words))
                 feature_vectors.update(get_pos_features(tags))
                 feature_vectors.update(get_opinion_features(words))
-                # print('wip')
                 # do this
             
 
@@ -340,7 +327,7 @@ def features_stub():
     features_category_tuples, texts = get_features_category_tuples(category_texts, feature_set)
 
     # raise NotImplemented
-    filename = "idk"
+    filename = feature_set + "-features.txt"
     write_features_category(features_category_tuples, filename)
 
 

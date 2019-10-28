@@ -3,6 +3,8 @@ import re, nltk, pickle, argparse
 import os
 import data_helper
 from features import get_features_category_tuples
+from contextlib import redirect_stdout
+
 
 DATA_DIR = "data"
 
@@ -36,11 +38,11 @@ def evaluate(classifier, features_category_tuples, reference_text, data_set_name
     ###     YOUR CODE GOES HERE
     # TODO: evaluate your model
     acc = nltk.classify.accuracy(classifier, features_category_tuples)
-    classifier.show_most_informative_features()
+   
 
     d = [l for f,l in features_category_tuples]
     t = [f for f, l in features_category_tuples]
-    # print(t)
+  
 
     f = classifier.classify_many(t)
 
@@ -48,13 +50,6 @@ def evaluate(classifier, features_category_tuples, reference_text, data_set_name
     confusion_matrix = cMatrix
     probability = classifier.prob_classify_many(t)
     accuracy = acc
-
-
-
-
-
-
-    
 
 
     return accuracy, probability, confusion_matrix
@@ -86,19 +81,21 @@ def train_model(datafile, feature_set, save_model=None):
     # TODO: train your model here
     # print(texts)
     classifier = nltk.classify.NaiveBayesClassifier.train(features_data)
+
+    # save_model = True
     
 
 
     if save_model is not None:
-        save_classifier(classifier, save_model)
+        save_classifier(classifier, 'imdb-' + feature_set + '-model-P1.pickle')
     return classifier
 
 
-def train_eval(train_file, feature_set, eval_file=None):
+def train_eval(train_file, feature_set, eval_file):
 
     # train the model
     split_name = "train"
-    model = train_model(train_file, feature_set)
+    model = train_model(train_file, feature_set, save_model=True)
     # model = train_model(train_file, feature_set,  binning=binning)
     #model.show_most_informative_features(20)
 
@@ -106,14 +103,24 @@ def train_eval(train_file, feature_set, eval_file=None):
     if model is None:
         model = get_classifier(classifier_fname)
 
+    fileOut = open(feature_set + '-' + eval_file + '-informative-features.txt', 'w')
+    with redirect_stdout(fileOut):
+        model.show_most_informative_features()
+
     # evaluate the model
     if eval_file is not None:
         # features_data, texts = build_features(eval_file, feature_set, binning=binning)
         features_data, texts = build_features(eval_file, feature_set)
         accuracy, probability, cm = evaluate(model, features_data, texts, data_set_name=None)
+        # print(texts)
+     
+     
         print("The accuracy of {} is: {}".format(eval_file, accuracy))
         print("Proabability per class:")
-        print(str(probability))
+        for p in probability:
+            print('%.4f %.4f' % (p.prob('negative'), p.prob('positive')))
+
+            
         print("Confusion Matrix:")
         print(str(cm))
     else:
@@ -138,7 +145,7 @@ def main():
     eval_data = "imdb-development.data"
 
 
-    for feat_set in ["word_features", "word_pos_features", "word_pos_liwc_features"]:
+    for feat_set in ["word_features", "word_pos_features", "word_pos_liwc_features", "word_pos_opinion_features"]:
         print("\nTraining with {}".format(feat_set))
         acc = train_eval(train_data, feat_set, eval_file=eval_data)
 

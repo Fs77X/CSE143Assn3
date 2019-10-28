@@ -1,0 +1,38 @@
+Training with word_features
+Most Informative Features
+           UNI_character = 0.012987012987012988 positi : negati =      5.2 : 1.0
+                UNI_well = 0.009900990099009901 positi : negati =      5.0 : 1.0
+               UNI_movie = 0.030303030303030304 positi : negati =      4.3 : 1.0
+               UNI_sense = 0.015625       positi : negati =      3.9 : 1.0
+              UNI_series = 0.0136986301369863 positi : negati =      3.9 : 1.0
+          UNI_especially = 0.011235955056179775 positi : negati =      3.8 : 1.0
+              UNI_always = 0.012987012987012988 positi : negati =      3.8 : 1.0
+                   UNI_d = 0.009900990099009901 positi : negati =      3.8 : 1.0
+              UNI_things = 0.011235955056179775 positi : negati =      3.8 : 1.0
+                UNI_love = 0.020833333333333332 positi : negati =      3.7 : 1.0
+
+Training with word_pos_features
+Most Informative Features
+               BI_NN_VBP = 0.013157894736842105 positi : negati =      6.0 : 1.0
+                 UNI_VBP = 0.025974025974025976 positi : negati =      5.3 : 1.0
+           UNI_character = 0.012987012987012988 positi : negati =      5.2 : 1.0
+           TRI_VBD_JJ_NN = 0.013333333333333334 positi : negati =      5.0 : 1.0
+           TRI_NN_NN_VBP = 0.013333333333333334 positi : negati =      5.0 : 1.0
+                UNI_well = 0.009900990099009901 positi : negati =      5.0 : 1.0
+               BI_NNS_VB = 0.011904761904761904 positi : negati =      5.0 : 1.0
+           TRI_NNS_NN_NN = 0.013333333333333334 positi : negati =      4.9 : 1.0
+           TRI_JJ_NN_NNS = 0.012048192771084338 positi : negati =      4.9 : 1.0
+           TRI_NN_NN_VBZ = 0.010101010101010102 positi : negati =      4.8 : 1.0
+
+Training with word_pos_liwc_features
+Most Informative Features
+               BI_NN_VBP = 0.013157894736842105 positi : negati =      6.0 : 1.0
+                 UNI_VBP = 0.025974025974025976 positi : negati =      5.3 : 1.0
+           UNI_character = 0.012987012987012988 positi : negati =      5.2 : 1.0
+           TRI_VBD_JJ_NN = 0.013333333333333334 positi : negati =      5.0 : 1.0
+           TRI_NN_NN_VBP = 0.013333333333333334 positi : negati =      5.0 : 1.0
+                UNI_well = 0.009900990099009901 positi : negati =      5.0 : 1.0
+               BI_NNS_VB = 0.011904761904761904 positi : negati =      5.0 : 1.0
+           TRI_NNS_NN_NN = 0.013333333333333334 positi : negati =      4.9 : 1.0
+           TRI_JJ_NN_NNS = 0.012048192771084338 positi : negati =      4.9 : 1.0
+           TRI_NN_NN_VBZ = 0.010101010101010102 positi : negati =      4.8 : 1.0
