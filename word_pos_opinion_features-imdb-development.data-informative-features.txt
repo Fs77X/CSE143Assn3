@@ -1,11 +1,11 @@
 Most Informative Features
-               BI_NN_VBP = 0.013157894736842105 positi : negati =      6.0 : 1.0
-                 UNI_VBP = 0.025974025974025976 positi : negati =      5.3 : 1.0
-           UNI_character = 0.012987012987012988 positi : negati =      5.2 : 1.0
-           TRI_VBD_JJ_NN = 0.013333333333333334 positi : negati =      5.0 : 1.0
-           TRI_NN_NN_VBP = 0.013333333333333334 positi : negati =      5.0 : 1.0
-                UNI_well = 0.009900990099009901 positi : negati =      5.0 : 1.0
-            UNI_POS_well = 0.009900990099009901 positi : negati =      5.0 : 1.0
-               BI_NNS_VB = 0.011904761904761904 positi : negati =      5.0 : 1.0
-           TRI_NNS_NN_NN = 0.013333333333333334 positi : negati =      4.9 : 1.0
-           TRI_JJ_NN_NNS = 0.012048192771084338 positi : negati =      4.9 : 1.0
+                 UNI_VBN = 0.2857142857142857 positi : negati =      7.7 : 1.0
+                BI_RB_JJ = 0.0625         positi : negati =      7.1 : 1.0
+                BI_VB_NN = 0.020833333333333332 positi : negati =      6.9 : 1.0
+                 UNI_NNP = 0.4            positi : negati =      6.8 : 1.0
+              BI_NNS_VBP = 0.02040816326530612 positi : negati =      6.3 : 1.0
+              BI_NNS_VBP = 0.020833333333333332 positi : negati =      6.3 : 1.0
+                BI_RB_NN = 0.020833333333333332 positi : negati =      6.0 : 1.0
+                BI_RB_NN = 0.038461538461538464 positi : negati =      6.0 : 1.0
+            TRI_JJ_JJ_NN = 0.018867924528301886 positi : negati =      6.0 : 1.0
+            TRI_NN_NN_JJ = 0.018867924528301886 positi : negati =      5.9 : 1.0

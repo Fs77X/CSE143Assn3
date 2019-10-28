@@ -41,7 +41,11 @@ def normalize(token, should_normalize=True):
         word = token.lower()
         stop = stopwords.words('english')
         if word not in stop:
-            normalized_token = re.findall('\w+', word)
+            normalized_token = re.search('\w+', word)
+            if normalized_token:
+                return word
+            else:
+                return None
         else:
             normalized_token = None
 
@@ -84,11 +88,13 @@ def get_words_tags(text, should_normalize=True):
                 norm = normalize(word[0])
                 # print(norm)
                 if norm:
-                    text = ''
-                    for wrd in norm:
-                        text = text + wrd
-                    words.append(text)
+                    words.append(norm)
                     tags.append(word[1])
+                    # text = ''
+                    # for wrd in norm:
+                    #     text = text + wrd
+                    
+                    
             
     else:
         sent = nltk.sent_tokenize(text)
@@ -129,15 +135,15 @@ def get_ngram_features(tokens):
     fDistTri = FreqDist(trigrams)
 
     for pair in fDistUni:
-        feature_vectors.update({('UNI_'+pair) : fDistUni[pair]/fDistUni.N()})
+        feature_vectors.update({('UNI_'+pair) : fDistUni[pair]/len(fDistUni)})
    
     
     for pair in fDistBi:
         # print(pair)
-        feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi[pair]/fDistBi.N()})
+        feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi[pair]/len(fDistBi)})
     
     for pair in fDistTri:
-        feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri[pair]/fDistTri.N()})
+        feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri[pair]/len(fDistTri)})
 
 
     return feature_vectors
@@ -163,13 +169,13 @@ def get_pos_features(tags):
     fDistTri = FreqDist(trigram)
 
     for pair in fDistUni:
-        feature_vectors.update({('UNI_'+pair) : fDistUni.freq(pair)})
+        feature_vectors.update({('UNI_'+pair) : fDistUni[pair]/len(fDistUni)})
     
     for pair in fDistBi:
-        feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi.freq(pair)})
+        feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi[pair]/len(fDistBi)})
     
     for pair in fDistTri:
-        feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri.freq(pair)})
+        feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri[pair]/len(fDistTri)})
 
 
 
@@ -195,14 +201,38 @@ def get_liwc_features(words):
     # of the word_category_counter.py script
     negative_score = liwc_scores["Negative Emotion"]
     positive_score = liwc_scores["Positive Emotion"]
+    anger_score = liwc_scores['Anger']
+    insight_score = liwc_scores['Insight']
+    sadness_score = liwc_scores['Sadness']
+    discrepancy_score = liwc_scores['Discrepancy']
+    tentative_score = liwc_scores['Tentative']
     feature_vectors["Negative Emotion"] = negative_score
     feature_vectors["Positive Emotion"] = positive_score
+    feature_vectors['Anger'] = anger_score
+    feature_vectors['Insight'] = insight_score
+    feature_vectors['Discrepancy'] = discrepancy_score
+    feature_vectors['Sadness'] = sadness_score
+    feature_vectors['Tentative'] = tentative_score
+
 
     if positive_score > negative_score:
         feature_vectors["liwc:positive"] = 1
     else:
         feature_vectors["liwc:negative"] = 1
+    
+    if anger_score > sadness_score:
+        feature_vectors['liwc:anger'] = 1
+    else:
+        feature_vectors['liwc:sadness'] = 1
 
+    if insight_score > discrepancy_score:
+        feature_vectors['liwc:insight'] = 1
+    else:
+        feature_vectors['liwc:discrepancy'] = 1
+    if tentative_score > discrepancy_score:
+        feature_vectors['liwc:tentative'] = 1
+    else: 
+        feature_vectors['liwc:discrepancy'] = 1
     return feature_vectors
 
 
@@ -234,11 +264,11 @@ def get_opinion_features(tags):
     wordF = FreqDist(words)
     for word in neg_opinion:
         if wordF.freq(word) > 0.0:
-            feature_vectors.update({'UNI_NEG_' + word : wordF.freq(word)})
+            feature_vectors.update({'UNI_NEG_' + word : wordF[word]/len(wordF)})
 
     for word in pos_opinion:
         if wordF.freq(word) > 0.0:
-            feature_vectors.update({'UNI_POS_' + word : wordF.freq(word)})
+            feature_vectors.update({'UNI_POS_' + word : wordF[word]/len(wordF)})
 
 
 
