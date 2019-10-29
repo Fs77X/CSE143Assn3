@@ -1,11 +1,11 @@
 Most Informative Features
-                 UNI_VBN = 0.2857142857142857 positi : negati =      7.7 : 1.0
-                BI_RB_JJ = 0.0625         positi : negati =      7.1 : 1.0
-                BI_VB_NN = 0.020833333333333332 positi : negati =      6.9 : 1.0
-                 UNI_NNP = 0.4            positi : negati =      6.8 : 1.0
-              BI_NNS_VBP = 0.02040816326530612 positi : negati =      6.3 : 1.0
-              BI_NNS_VBP = 0.020833333333333332 positi : negati =      6.3 : 1.0
-                BI_RB_NN = 0.020833333333333332 positi : negati =      6.0 : 1.0
-                BI_RB_NN = 0.038461538461538464 positi : negati =      6.0 : 1.0
-            TRI_JJ_JJ_NN = 0.018867924528301886 positi : negati =      6.0 : 1.0
-            TRI_NN_NN_JJ = 0.018867924528301886 positi : negati =      5.9 : 1.0
+                 UNI_VBP = 0.2222222222222222 negati : positi =      1.0 : 1.0
+                 UNI_yet = 0.017241379310344827 negati : positi =      1.0 : 1.0
+              BI_NNS_VBP = 0.05           negati : positi =      1.0 : 1.0
+               BI_VBG_NN = 0.025          negati : positi =      1.0 : 1.0
+               UNI_movie = 0.0273972602739726 negati : positi =      1.0 : 1.0
+           UNI_something = 0.013          negati : positi =      1.0 : 1.0
+                UNI_fact = 0.015151515151515152 negati : positi =      1.0 : 1.0
+                UNI_shot = 0.014          negati : positi =      1.0 : 1.0
+                 UNI_new = 0.013513513513513514 negati : positi =      1.0 : 1.0
+                 UNI_way = 0.0125         negati : positi =      1.0 : 1.0

@@ -1,11 +1,11 @@
 Most Informative Features
-                 UNI_way = 0.0125         positi : negati =      5.1 : 1.0
-                 UNI_one = 0.030303030303030304 positi : negati =      4.6 : 1.0
-               UNI_movie = 0.0273972602739726 positi : negati =      4.3 : 1.0
-                 UNI_bit = 0.013513513513513514 positi : negati =      3.8 : 1.0
-                 UNI_yet = 0.017241379310344827 positi : negati =      3.8 : 1.0
-                UNI_fact = 0.015151515151515152 positi : negati =      3.8 : 1.0
-                 UNI_may = 0.0125         positi : negati =      3.8 : 1.0
-               UNI_times = 0.013513513513513514 positi : negati =      3.8 : 1.0
-                 UNI_new = 0.013513513513513514 positi : negati =      3.8 : 1.0
-              UNI_pretty = 0.01639344262295082 positi : negati =      3.8 : 1.0
+                 UNI_way = 0.0125         negati : positi =      1.0 : 1.0
+           UNI_something = 0.013          negati : positi =      1.0 : 1.0
+                UNI_fact = 0.015151515151515152 negati : positi =      1.0 : 1.0
+                 UNI_bit = 0.013513513513513514 negati : positi =      1.0 : 1.0
+                UNI_shot = 0.014          negati : positi =      1.0 : 1.0
+                 UNI_new = 0.013513513513513514 negati : positi =      1.0 : 1.0
+                 UNI_may = 0.0125         negati : positi =      1.0 : 1.0
+             UNI_without = 0.013          negati : positi =      1.0 : 1.0
+                 UNI_yet = 0.017241379310344827 negati : positi =      1.0 : 1.0
+                 UNI_one = 0.030303030303030304 negati : positi =      1.0 : 1.0
