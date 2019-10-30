@@ -9,6 +9,7 @@ from nltk.corpus import opinion_lexicon
 from nltk.corpus import stopwords
 from nltk.probability import ConditionalFreqDist, FreqDist
 from nltk.util import bigrams, ngrams
+from contextlib import redirect_stdout
 
 
 DATA_DIR = "data"
@@ -32,7 +33,7 @@ def normalize(token, should_normalize=True):
     :return: None or str
     """
     if not should_normalize:
-        normalized_token = token
+        normalized_token = token.lower()
 
     else:
 
@@ -41,7 +42,7 @@ def normalize(token, should_normalize=True):
         word = token.lower()
         stop = stopwords.words('english')
         if word not in stop:
-            normalized_token = re.search('\w+', word)
+            normalized_token = re.findall('\w+', word)
             if normalized_token:
                 return word
             else:
@@ -88,14 +89,14 @@ def get_words_tags(text, should_normalize=True):
                 norm = normalize(word[0])
                 # print(norm)
                 if norm:
-                    words.append(norm)
-                    tags.append(word[1])
-                    # text = ''
-                    # for wrd in norm:
-                    #     text = text + wrd
+                    text = ''
+                    for wrd in norm:
+                        text = text + wrd
                     
-                    
-            
+
+                    words.append(text)
+                tags.append(word[1])
+
     else:
         sent = nltk.sent_tokenize(text)
         for sentence in sent:
@@ -140,31 +141,31 @@ def get_ngram_features(tokens):
 
     # # YOUR CODE GOES HERE
     # # print('bruh')
-    # unigrams = tokens
-    # # l = len(tokens)
-    # bigG = list(bigrams(tokens))
-    # trigrams = list(ngrams(tokens, 3))
+    unigrams = tokens
+    # l = len(tokens)
+    bigG = list(bigrams(tokens))
+    trigrams = list(ngrams(tokens, 3))
 
 
-    # fDistUni = FreqDist(unigrams)
-    # fDistUni = fDistUni.most_common()
-    # fDistBi = FreqDist(bigG)
-    # fDistBi = fDistBi.most_common()
-    # fDistTri = FreqDist(trigrams)
-    # fDistTri = fDistTri.most_common()
+    fDistUni = FreqDist(unigrams)
+    fDistUni = fDistUni.most_common()
+    fDistBi = FreqDist(bigG)
+    fDistBi = fDistBi.most_common()
+    fDistTri = FreqDist(trigrams)
+    fDistTri = fDistTri.most_common()
 
-    # for pair in fDistUni:
-    #     # print(pair)
-    #     feature_vectors.update({('UNI_'+pair[0]) : pair[1]/len(fDistUni)})
+    for pair in fDistUni:
+        # print(pair)
+        feature_vectors.update({('UNI_'+pair[0]) : pair[1]/len(fDistUni)})
    
     
-    # for pair in fDistBi:
-    #     # print(pair)
-    #     feature_vectors.update({'BI_'+pair[0][0] + '_' + pair[0][1] : pair[1]/len(fDistBi)})
+    for pair in fDistBi:
+        # print(pair)
+        feature_vectors.update({'BI_'+pair[0][0] + '_' + pair[0][1] : pair[1]/len(fDistBi)})
     
-    # for pair in fDistTri:
-    #     # print(pair)
-    #     feature_vectors.update({'TRI_' + pair[0][0] + '_' + pair[0][1] + '_' + pair[0][2] :pair[1]/len(fDistTri)})
+    for pair in fDistTri:
+        # print(pair)
+        feature_vectors.update({'TRI_' + pair[0][0] + '_' + pair[0][1] + '_' + pair[0][2] :pair[1]/len(fDistTri)})
 
 
     return feature_vectors
@@ -187,25 +188,25 @@ def get_pos_features(tags):
     feature_vectors.update({'UNI_VBP': 0.2222222222222222})
 
     # # YOUR CODE GOES HERE
-    # unigrams = tags
-    # bigG = list(bigrams(tags))
-    # trigram = list(ngrams(tags, 3))
+    unigrams = tags
+    bigG = list(bigrams(tags))
+    trigram = list(ngrams(tags, 3))
 
-    # fDistUni = FreqDist(unigrams)
-    # # fDistUni = fDistUni.most_common()
-    # fDistBi = FreqDist(bigG)
-    # # fDistBi = fDistBi.most_common()
-    # fDistTri = FreqDist(trigram)
-    # # fDistTri = fDistTri.most_common()
+    fDistUni = FreqDist(unigrams)
+    # fDistUni = fDistUni.most_common()
+    fDistBi = FreqDist(bigG)
+    # fDistBi = fDistBi.most_common()
+    fDistTri = FreqDist(trigram)
+    # fDistTri = fDistTri.most_common()
 
-    # for pair in fDistUni:
-    #     feature_vectors.update({('UNI_'+pair) : fDistUni[pair]/len(fDistUni)})
+    for pair in fDistUni:
+        feature_vectors.update({('UNI_'+pair) : fDistUni[pair]/len(fDistUni)})
     
-    # for pair in fDistBi:
-    #     feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi[pair]/len(fDistBi)})
+    for pair in fDistBi:
+        feature_vectors.update({'BI_'+pair[0] + '_' + pair[1] : fDistBi[pair]/len(fDistBi)})
     
-    # for pair in fDistTri:
-    #     feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri[pair]/len(fDistTri)})
+    for pair in fDistTri:
+        feature_vectors.update({'TRI_' + pair[0] + '_' + pair[1] + '_' + pair[2] :fDistTri[pair]/len(fDistTri)})
 
 
 
@@ -234,45 +235,45 @@ def get_liwc_features(words):
     feature_vectors.update({'Positive Emotion': 11})
     feature_vectors.update({'Discrepancy': 2})
     feature_vectors.update({'Discrepancy': 4})
-    # text = " ".join(words)
-    # liwc_scores = word_category_counter.score_text(text)
+    text = " ".join(words)
+    liwc_scores = word_category_counter.score_text(text)
 
     # # All possible keys to the scores start on line 269
     # # of the word_category_counter.py script
-    # negative_score = liwc_scores["Negative Emotion"]
-    # positive_score = liwc_scores["Positive Emotion"]
-    # anger_score = liwc_scores['Anger']
-    # insight_score = liwc_scores['Insight']
-    # sadness_score = liwc_scores['Sadness']
-    # discrepancy_score = liwc_scores['Discrepancy']
-    # tentative_score = liwc_scores['Tentative']
-    # feature_vectors["Negative Emotion"] = negative_score
-    # feature_vectors["Positive Emotion"] = positive_score
-    # feature_vectors['Anger'] = anger_score
-    # feature_vectors['Insight'] = insight_score
-    # feature_vectors['Discrepancy'] = discrepancy_score
-    # feature_vectors['Sadness'] = sadness_score
-    # feature_vectors['Tentative'] = tentative_score
+    negative_score = liwc_scores["Negative Emotion"]
+    positive_score = liwc_scores["Positive Emotion"]
+    anger_score = liwc_scores['Anger']
+    insight_score = liwc_scores['Insight']
+    sadness_score = liwc_scores['Sadness']
+    discrepancy_score = liwc_scores['Discrepancy']
+    tentative_score = liwc_scores['Tentative']
+    feature_vectors["Negative Emotion"] = negative_score
+    feature_vectors["Positive Emotion"] = positive_score
+    feature_vectors['Anger'] = anger_score
+    feature_vectors['Insight'] = insight_score
+    feature_vectors['Discrepancy'] = discrepancy_score
+    feature_vectors['Sadness'] = sadness_score
+    feature_vectors['Tentative'] = tentative_score
 
 
-    # if positive_score > negative_score:
-    #     feature_vectors["liwc:positive"] = 1
-    # else:
-    #     feature_vectors["liwc:negative"] = 1
+    if positive_score > negative_score:
+        feature_vectors["liwc:positive"] = 1
+    else:
+        feature_vectors["liwc:negative"] = 1
     
-    # if anger_score > sadness_score:
-    #     feature_vectors['liwc:anger'] = 1
-    # else:
-    #     feature_vectors['liwc:sadness'] = 1
+    if anger_score > sadness_score:
+        feature_vectors['liwc:anger'] = 1
+    else:
+        feature_vectors['liwc:sadness'] = 1
 
-    # if insight_score > discrepancy_score:
-    #     feature_vectors['liwc:insight'] = 1
-    # else:
-    #     feature_vectors['liwc:discrepancy'] = 1
-    # if tentative_score > discrepancy_score:
-    #     feature_vectors['liwc:tentative'] = 1
-    # else: 
-    #     feature_vectors['liwc:discrepancy'] = 1
+    if insight_score > discrepancy_score:
+        feature_vectors['liwc:insight'] = 1
+    else:
+        feature_vectors['liwc:discrepancy'] = 1
+    if tentative_score > discrepancy_score:
+        feature_vectors['liwc:tentative'] = 1
+    else: 
+        feature_vectors['liwc:discrepancy'] = 1
     return feature_vectors
 
 
@@ -310,15 +311,15 @@ def get_opinion_features(tags):
     feature_vectors.update({'UNI_POS_thank': 0.016666666666666666})
     feature_vectors.update({'UNI_POS_clearly': 0.013513513513513514})
     feature_vectors.update({'UNI_NEG_confusing': 0.013513513513513514})
-    # words = tags
-    # wordF = FreqDist(words)
-    # for word in neg_opinion:
-    #     if wordF.freq(word) > 0.0:
-    #         feature_vectors.update({'UNI_NEG_' + word : wordF[word]/len(wordF)})
+    words = tags
+    wordF = FreqDist(words)
+    for word in neg_opinion:
+        if wordF.freq(word) > 0.0:
+            feature_vectors.update({'UNI_NEG_' + word : wordF[word]/len(wordF)})
 
-    # for word in pos_opinion:
-    #     if wordF.freq(word) > 0.0:
-    #         feature_vectors.update({'UNI_POS_' + word : wordF[word]/len(wordF)})
+    for word in pos_opinion:
+        if wordF.freq(word) > 0.0:
+            feature_vectors.update({'UNI_POS_' + word : wordF[word]/len(wordF)})
 
 
 
@@ -340,8 +341,6 @@ def get_features_category_tuples(category_text_dict, feature_set):
     all_texts = []
 
     assert feature_set in FEATURE_SETS, "unrecognized feature set:{}, Accepted values:{}".format(feature_set, FEATURE_SETS)
-    # print(feature_set)
-    # print(FEATURE_SETS)
     for category in category_text_dict:
   
         for text in category_text_dict[category]:
@@ -374,6 +373,7 @@ def get_features_category_tuples(category_text_dict, feature_set):
             
 
             features_category_tuples.append((feature_vectors, category))
+            
             all_texts.append(text)
 
     return features_category_tuples, all_texts
@@ -397,17 +397,19 @@ def write_features_category(features_category_tuples, outfile_name):
 
 
 def features_stub():
-    datafile = "imdb-training.data"
+    datafile = "imdb-testing.data"
     raw_data = data_helper.read_file(datafile)
     positive_texts, negative_texts = data_helper.get_reviews(raw_data)
 
     category_texts = {"positive": positive_texts, "negative": negative_texts}
+    # FEATURE_SETS = {"word_pos_features", "word_features", "word_pos_liwc_features", "word_pos_opinion_features"}
+
     feature_set = "word_pos_opinion_features"
 
     features_category_tuples, texts = get_features_category_tuples(category_texts, feature_set)
 
     # raise NotImplemented
-    filename = feature_set + "-features.txt"
+    filename = feature_set + "-testing-features.txt"
     write_features_category(features_category_tuples, filename)
 
 
