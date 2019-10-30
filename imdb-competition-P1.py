@@ -80,6 +80,7 @@ def train_model(datafile, feature_set, save_model=None):
     ###     YOUR CODE GOES HERE
     # TODO: train your model here
     # print(texts)
+    # print(features_data)
     classifier = nltk.classify.NaiveBayesClassifier.train(features_data)
 
     # save_model = True
@@ -105,7 +106,7 @@ def train_eval(train_file, feature_set, eval_file):
 
     fileOut = open(feature_set + '-' + eval_file + '-informative-features.txt', 'w')
     with redirect_stdout(fileOut):
-        model.show_most_informative_features()
+        model.show_most_informative_features(20)
 
     # evaluate the model
     if eval_file is not None:
@@ -142,7 +143,7 @@ def main():
     train_data = args.data_fname
 
 
-    eval_data = "imdb-development.data"
+    eval_data = "imdb-testing.data"
 
 
     for feat_set in ["word_features", "word_pos_features", "word_pos_liwc_features", "word_pos_opinion_features"]:

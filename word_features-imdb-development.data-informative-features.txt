@@ -6,6 +6,16 @@ Most Informative Features
                 UNI_look = 0.0125         positi : negati =      3.7 : 1.0
                  UNI_end = 0.012195121951219513 positi : negati =      3.7 : 1.0
                 UNI_life = 0.0125         positi : negati =      3.7 : 1.0
-               UNI_think = 0.02702702702702703 positi : negati =      3.6 : 1.0
                UNI_think = 0.016666666666666666 positi : negati =      3.6 : 1.0
+               UNI_think = 0.02702702702702703 positi : negati =      3.6 : 1.0
                 UNI_much = 0.016129032258064516 positi : negati =      3.6 : 1.0
+               UNI_great = 0.023809523809523808 positi : negati =      3.6 : 1.0
+                UNI_well = 0.013513513513513514 positi : negati =      3.6 : 1.0
+              UNI_people = 0.0125         positi : negati =      3.5 : 1.0
+                UNI_even = 0.015151515151515152 positi : negati =      3.5 : 1.0
+              UNI_really = 0.015384615384615385 positi : negati =      3.5 : 1.0
+                UNI_good = 0.03225806451612903 positi : negati =      3.5 : 1.0
+               UNI_story = 0.013513513513513514 positi : negati =      3.4 : 1.0
+               UNI_would = 0.0375         positi : negati =      3.4 : 1.0
+                UNI_like = 0.016666666666666666 positi : negati =      3.3 : 1.0
+                 UNI_n't = 0.0125         positi : negati =      3.2 : 1.0

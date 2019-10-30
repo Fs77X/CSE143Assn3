@@ -397,7 +397,7 @@ def write_features_category(features_category_tuples, outfile_name):
 
 
 def features_stub():
-    datafile = "imdb-testing.data"
+    datafile = "imdb-training.data"
     raw_data = data_helper.read_file(datafile)
     positive_texts, negative_texts = data_helper.get_reviews(raw_data)
 
